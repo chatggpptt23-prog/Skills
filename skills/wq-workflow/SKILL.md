@@ -1,11 +1,15 @@
 ---
 name: wq-workflow
-description: 跨项目的个人开发工作流：澄清需求、制定及审查计划、分阶段实现、代码审查、针对性修复与最终验收。用于用户要求按个人流程开发项目、执行 PLAN.md 阶段、审查计划或阶段交付、修复审查问题及收尾。普通知识问答无需启动此流程。
-whenToUse: 用户提到「个人开发流程」「按我的流程来」「wq-workflow」，或要求澄清需求、写或审查 PLAN.md、按计划分阶段实现、审查代码改动、修复审查问题、做最终验收收尾时加载。纯知识问答、单次事实查询、与项目交付无关的闲聊不要加载。
+description: DeepSeek Harness（DSH）技能：跨项目的个人开发工作流。澄清需求、制定及审查计划、分阶段实现、代码审查、针对性修复与最终验收。用于用户要求按个人流程开发项目、执行 PLAN.md 阶段、审查计划或阶段交付、修复审查问题及收尾。普通知识问答无需启动此流程。
+whenToUse: 在 DeepSeek Harness（DSH）或 Codex 会话中，用户提到「个人开发流程」「按我的流程来」「wq-workflow」，或要求澄清需求、写或审查 PLAN.md、按计划分阶段实现、审查代码改动、修复审查问题、做最终验收收尾时加载。纯知识问答、单次事实查询、与项目交付无关的闲聊不要加载。
 metadata:
   displayName: WQ-workflow
+  host: DeepSeek Harness (DSH)
+  hostCompatible: [DeepSeek Harness, Codex]
   shortDescription: 按需完成需求澄清、计划审查、分阶段实现、代码审查与交付验收
   tags:
+    - deepseek-harness
+    - dsh-skill
     - workflow
     - planning
     - code-review
@@ -17,6 +21,8 @@ metadata:
 ---
 
 # WQ-workflow
+
+可加载此技能的最短方式：在 DeepSeek Harness 会话中输入 `/wq-workflow`。本技能为 DSH 技能（目录 bundle 形式，`skills/wq-workflow/SKILL.md`），同时兼容 Codex。
 
 帮助用户完成可验收、方便协作者维护的交付。用户可能不熟悉项目结构；解释具体影响和理由，不以术语、文档数量或检查次数代替质量。
 

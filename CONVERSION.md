@@ -139,6 +139,58 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 
 **运行时验证**：安装到 `~/.dsh/skills/wq-workflow` 后，当前会话的 `<available_skills>` 目录**立即出现** `wq-workflow` 条目，无需重启——说明 DSH 的文件监视器已捕获变更并刷新目录。随后用 `skill` 工具加载，`<skill_resources>` 正确给出 base directory，`references/` 的相对路径可解析。
 
+## 补充：显式标注为 Harness 技能
+
+首轮改造后追加了三处明示化，目的是让人和 DSH 都能一眼认出「这是 DeepSeek Harness 技能」，并确认在 `/` 菜单里搜得到。
+
+**① `description` 前缀**
+
+```yaml
+description: DeepSeek Harness（DSH）技能：跨项目的个人开发工作流。……
+```
+
+`description` 会原样渲染进 DSH 的会话技能目录（`<available_skills>`），因此这条前缀直接出现在模型与用户可见的位置。
+
+**② `metadata` 增加宿主字段**
+
+```yaml
+metadata:
+  host: DeepSeek Harness (DSH)
+  hostCompatible: [DeepSeek Harness, Codex]
+  tags: [deepseek-harness, dsh-skill, workflow, planning, code-review, delivery]
+```
+
+`tags` 里加了 `deepseek-harness` 与 `dsh-skill` 便于检索仓库。
+
+**③ `SKILL.md` 正文首段**
+
+在标题下加了一行最短调用说明（正文其余部分仍与原始规则逐字一致）：
+
+```
+可加载此技能的最短方式：在 DeepSeek Harness 会话中输入 `/wq-workflow`。
+本技能为 DSH 技能（目录 bundle 形式，`skills/wq-workflow/SKILL.md`），同时兼容 Codex。
+```
+
+**④ 仓库与技能 README**
+
+标题区改为「**DeepSeek Harness（DSH）技能集合**，同时兼容 Codex」，并新增「在 DeepSeek Harness 里怎么用它」一节。
+
+### 关于「能不能搜到」
+
+DSH 的 `/` 菜单按**技能名**做不分大小写的模糊匹配（有序子序列，前缀命中优先），**不匹配描述文字**。因此：
+
+| 输入 | 结果 |
+| --- | --- |
+| `/` | 菜单里列出 `wq-workflow` |
+| `/wq` | 命中（前缀） |
+| `/workflow` | 命中（子串） |
+| `/wqw` | 命中（子序列） |
+| `/harness` | **不命中** —— 名称里没有该词 |
+
+也就是说，搜「harness」「skill」这类描述性词命中不了，这不是配置问题而是菜单的匹配规则决定。若确实希望用这些词检索，只能改技能名（如 `harness-wq-workflow`），但会与原始 `wq-workflow` 身份脱节，因此没有这样做。
+
+实际验证：把技能装到 `~/.dsh/skills/wq-workflow` 后，当前会话的 `<available_skills>` 立刻出现该条目，描述已带 Harness 前缀；用 `skill` 工具加载，正文首段含新增的最短调用说明，`references/` 相对路径正常解析。
+
 ## 复用到其他技能
 
 仓库新增技能时按同样三步即可：

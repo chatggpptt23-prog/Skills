@@ -1,14 +1,15 @@
 # WQ-workflow
 
-一套用于 agent 的个人项目开发技能，将需求澄清、计划、实现、审查、修复和交付组织成可复用的工作流程。
+**DeepSeek Harness（DSH）技能**，同时兼容 Codex。一套用于 agent 的个人项目开发技能，将需求澄清、计划、实现、审查、修复和交付组织成可复用的工作流程。
 
 它帮助开发者控制任务范围、保留验证依据，并让改动便于协作者理解和维护。既适用于从零开始的项目，也适用于已有项目中的功能开发和局部修复。
 
 - **显示名称**：WQ-workflow
 - **技能标识**：`wq-workflow`
-- **显式调用**：DSH 中 `/wq-workflow`，Codex 中 `$wq-workflow`
+- **宿主**：DeepSeek Harness（DSH）✅ · Codex ✅
+- **显式调用**：DSH 中 `/wq-workflow`（或 `/wq`、`/workflow` 模糊匹配），Codex 中 `$wq-workflow`
 - **规则入口**：[SKILL.md](SKILL.md)
-- **仓库**：[XiaoCuan030117/Skills](https://github.com/XiaoCuan030117/Skills)
+- **仓库**：[chatggpptt23-prog/Skills](https://github.com/chatggpptt23-prog/Skills)
 
 ## 用途与边界
 

@@ -1,14 +1,28 @@
 # Skills
 
-可复用的 agent 技能集合，沉淀开发工作流与协作实践。
+**DeepSeek Harness（DSH）技能集合**，同时兼容 Codex。沉淀可复用的开发工作流与协作实践。
 
-技能采用通用目录约定：每个技能是 `skills/<name>/SKILL.md` 形式的独立 bundle，带 YAML frontmatter。该结构可同时被 **DeepSeek Harness（DSH）** 与 **Codex** 直接发现，无需为不同宿主维护两份文件。
+每个技能是 `skills/<name>/SKILL.md` 形式的独立目录 bundle，带 YAML frontmatter——这正是 DSH `skill-filesystem` 提供方要求的格式，无需任何转换。
+
+## 在 DeepSeek Harness 里怎么用它
+
+装好之后（见下方[安装](#安装)），在任意 DSH 会话中：
+
+| 操作 | 效果 |
+| --- | --- |
+| 输入 `/` | 弹出技能菜单，列表里会有 `wq-workflow` |
+| 输入 `/wq` 或 `/workflow` 或 `/wq-workflow` | 直接选中该技能（`/` 菜单按技能名做不分大小写的模糊匹配） |
+| 直接描述开发任务 | 由 `description` 与 `whenToUse` 自动匹配加载 |
+
+`/` 菜单只匹配**技能名**（`wq-workflow`），不匹配描述文字。所以搜 `wq`、`workflow`、`wqw` 都能命中，搜「harness」这类描述性词不行。
+
+安装后可在 `~/.dsh/skills/wq-workflow/` 确认落地，DSH 会监视该目录，新增技能通常无需重启。
 
 ## 技能目录
 
-| 技能 | 用途 | 使用说明 |
-| --- | --- | --- |
-| **WQ-workflow** · `wq-workflow` | 从需求澄清、计划审查到分阶段实现、代码审查、修复及最终验收；控制范围，减少重复检查，保留清楚的交接记录。 | [README](skills/wq-workflow/README.md) · [技能规则](skills/wq-workflow/SKILL.md) |
+| 技能 | 宿主 | 用途 | 使用说明 |
+| --- | --- | --- | --- |
+| **WQ-workflow** · `wq-workflow` | DSH ✅ · Codex ✅ | 从需求澄清、计划审查到分阶段实现、代码审查、修复及最终验收；控制范围，减少重复检查，保留清楚的交接记录。 | [README](skills/wq-workflow/README.md) · [技能规则](skills/wq-workflow/SKILL.md) |
 
 ## 安装
 
