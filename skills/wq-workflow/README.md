@@ -1,12 +1,12 @@
 # WQ-workflow
 
-一套用于 Codex 的个人项目开发技能，将需求澄清、计划、实现、审查、修复和交付组织成可复用的工作流程。
+一套用于 agent 的个人项目开发技能，将需求澄清、计划、实现、审查、修复和交付组织成可复用的工作流程。
 
 它帮助开发者控制任务范围、保留验证依据，并让改动便于协作者理解和维护。既适用于从零开始的项目，也适用于已有项目中的功能开发和局部修复。
 
 - **显示名称**：WQ-workflow
 - **技能标识**：`wq-workflow`
-- **显式调用**：`$wq-workflow`
+- **显式调用**：DSH 中 `/wq-workflow`，Codex 中 `$wq-workflow`
 - **规则入口**：[SKILL.md](SKILL.md)
 - **仓库**：[XiaoCuan030117/Skills](https://github.com/XiaoCuan030117/Skills)
 
@@ -28,7 +28,49 @@
 
 这是一个以说明文件为主的技能，无需安装 Python、Node.js 或额外运行依赖。实际开发和测试所需环境由目标项目决定。
 
-### 使用 Codex 技能安装器
+技能 bundle 结构在两个宿主中完全一致，**安装一次即可两边共用**。
+
+### DeepSeek Harness
+
+DSH 从下列根目录发现技能（rank 小者优先），任选其一放入 `wq-workflow/` 即可：
+
+| Rank | 路径 |
+| --- | --- |
+| 100 | `<项目根>/.dsh/skills` |
+| 200 | `<项目根>/.agents/skills` |
+| 400 | `$DSH_HOME/skills`（默认 `~/.dsh/skills`） |
+| 500 | `~/.agents/skills` |
+
+仓库根目录的安装脚本会自动处理：
+
+```powershell
+.\install.ps1              # ~\.dsh\skills
+.\install.ps1 -Project     # 当前项目 .dsh\skills
+.\install.ps1 -Agents      # ~\.agents\skills
+```
+
+```bash
+./install.sh
+./install.sh --project
+./install.sh --agents
+```
+
+也可手动复制整个 `wq-workflow` 文件夹到上述任一目录。安装后应当直接存在：
+
+```text
+<技能根>/wq-workflow/SKILL.md
+```
+
+DSH 会监视技能根，新增技能通常无需重启；若 `/` 菜单未出现，重开一个会话。输入 `/wq-workflow` 显式调用，或直接描述开发任务由 `whenToUse` 自动匹配。
+
+### Codex
+
+沿用 Codex 的既有约定：
+
+- 个人目录：`~/.agents/skills/wq-workflow/`
+- 项目目录：`<项目>/.agents/skills/wq-workflow/`
+
+这两个位置同时是 DSH 的 rank 200 / 500 根，因此在该处安装后 DSH 也能发现。
 
 如果当前环境提供 `$skill-installer`，可在 Codex 中输入：
 
@@ -39,47 +81,19 @@ https://github.com/XiaoCuan030117/Skills/tree/main/skills/wq-workflow
 
 安装器的目标目录以当前环境配置为准。已有同名技能时，先确认要保留或更新哪一份，避免重复安装或直接覆盖自定义修改。
 
-### 手动个人安装：供多个项目使用
+### 不要同时装多份
 
-1. 从 [Skills 仓库](https://github.com/XiaoCuan030117/Skills) 下载 ZIP 并解压。
-2. 找到其中的 `skills/wq-workflow/`，确认直接包含 `SKILL.md`、`agents/` 和 `references/`。
-3. 将完整的 `wq-workflow` 文件夹放入个人技能目录；不要将整个 Skills 仓库当成单个技能安装。
+同一个技能被安装在多个可发现根下时，宿主会按优先级只取其中一个。为避免混淆，选择一个位置即可。安装脚本在检测到其他根存在同名副本时会给出警告。
 
-当前 Codex 官方文档列出的个人技能目录是：
-
-```text
-~/.agents/skills/wq-workflow/
-```
-
-部分现有环境使用 `~/.codex/skills/`。如果你的 Codex 已在该目录发现个人技能，可沿用实际使用的目录。选择一个被当前环境识别的位置，避免在多个可发现目录中安装同名副本。
-
-安装后应当直接存在：
-
-```text
-<个人技能目录>/wq-workflow/SKILL.md
-```
-
-不要多套一层同名目录，也不要只复制 `SKILL.md` 而遗漏引用文件。
-
-### 项目安装：供一个项目使用
-
-将同一份技能目录放入项目根目录下的：
-
-```text
-.agents/skills/wq-workflow/
-```
-
-如果准备将技能随团队项目提交，先确认符合团队约定。个人使用时优先采用个人安装，避免把自己的流程直接加入团队仓库。
+不要多套一层同名目录，也不要只复制 `SKILL.md` 而遗漏 `references/`——正文以相对路径引用它们。
 
 ### 确认安装
 
-在 Codex 中选择或输入 `$wq-workflow`，要求它读取技能并说明可用环节。若未显示，重启 Codex 后重试。
-
-Codex 支持显式调用和根据描述自动匹配技能。希望明确采用这套流程时，建议显式写出 `$wq-workflow`。目录发现和调用方式以 [Codex 官方技能文档](https://learn.chatgpt.com/docs/build-skills) 为准；其他 agent 工具的安装位置和调用方式可能不同。
+在会话中显式调用技能，要求它读取规则并说明可用环节。若未出现在调用列表中，确认路径层级正确（`<根>/wq-workflow/SKILL.md`），必要时重开会话。
 
 ## 调用示例
 
-以下示例按环节分别使用，不需要一次全部发送。补充实际需求、阶段编号及审查范围即可。
+以下示例按环节分别使用，不需要一次全部发送。补充实际需求、阶段编号及审查范围即可。示例中的 `$wq-workflow` 在 DSH 中写作 `/wq-workflow`。
 
 ### 1. 从想法到计划
 
@@ -198,7 +212,22 @@ wq-workflow/
 - [planning.md](references/planning.md)：需求质询、初始项目规则和计划编写。
 - [review.md](references/review.md)：计划审查、代码审查、问题记录和复审。
 - [delivery.md](references/delivery.md)：实施、修复、收尾及 Git 操作边界。
-- [openai.yaml](agents/openai.yaml)：技能在 Codex 中的显示信息。
+- [openai.yaml](agents/openai.yaml)：技能在 Codex 中的显示信息；DSH 忽略此文件。
+
+## frontmatter 字段
+
+`SKILL.md` 的 YAML frontmatter 是两个宿主共用的契约：
+
+| 字段 | 用途 | 备注 |
+| --- | --- | --- |
+| `name` | 技能标识 | 必须 kebab-case：`^[a-z0-9]+(?:-[a-z0-9]+)*$` |
+| `description` | 能力说明 | DSH 会话目录中超过 500 字符会被截断 |
+| `whenToUse` | 触发条件 | DSH 用于判断何时加载；Codex 忽略 |
+| `metadata` | 附加信息 | 任意结构化数据；Codex 忽略 |
+| `disable-model-invocation` | 禁止模型自动调用 | 为 `true` 时只能 `/name` 显式调用 |
+| `user-invocable` | 是否出现在 `/` 菜单 | 默认允许 |
+
+修改时保持 `name` 与目录名一致，避免两个宿主中出现不同标识。
 
 ## 限制与维护
 

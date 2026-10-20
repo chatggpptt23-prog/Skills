@@ -1,6 +1,19 @@
 ---
 name: wq-workflow
 description: 跨项目的个人开发工作流：澄清需求、制定及审查计划、分阶段实现、代码审查、针对性修复与最终验收。用于用户要求按个人流程开发项目、执行 PLAN.md 阶段、审查计划或阶段交付、修复审查问题及收尾。普通知识问答无需启动此流程。
+whenToUse: 用户提到「个人开发流程」「按我的流程来」「wq-workflow」，或要求澄清需求、写或审查 PLAN.md、按计划分阶段实现、审查代码改动、修复审查问题、做最终验收收尾时加载。纯知识问答、单次事实查询、与项目交付无关的闲聊不要加载。
+metadata:
+  displayName: WQ-workflow
+  shortDescription: 按需完成需求澄清、计划审查、分阶段实现、代码审查与交付验收
+  tags:
+    - workflow
+    - planning
+    - code-review
+    - delivery
+  references:
+    - references/planning.md
+    - references/review.md
+    - references/delivery.md
 ---
 
 # WQ-workflow
